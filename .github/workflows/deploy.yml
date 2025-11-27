@@ -1,4 +1,3 @@
-# .github/workflows/deploy.yml
 name: Deploy SPA
 
 on:
@@ -8,9 +7,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions.setup-node@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 18
 
@@ -20,10 +23,10 @@ jobs:
       - name: Create .env file
         run: |
           echo "VITE_SPOTIFY_CLIENT_ID=${{ secrets.AUTH_CLIENT_ID }}" > .env
-          echo "Conteúdo .env:"
+          echo "Conteúdo do .env criado no runner:"
           cat .env
 
-      - name: Build
+      - name: Build application
         run: npm run build
 
       - name: Deploy to GitHub Pages
