@@ -1,3 +1,4 @@
+# .github/workflows/deploy.yml
 name: Deploy SPA
 
 on:
@@ -7,20 +8,20 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
+      - uses: actions.setup-node@v4
         with:
           node-version: 18
 
-      - name: Install
+      - name: Install dependencies
         run: npm ci
 
-      # 💡 AQUI É O PASSO OBRIGATÓRIO
       - name: Create .env file
-        run: echo "VITE_SPOTIFY_CLIENT_ID=${{ secrets.AUTH_CLIENT_ID }}" > .env
+        run: |
+          echo "VITE_SPOTIFY_CLIENT_ID=${{ secrets.AUTH_CLIENT_ID }}" > .env
+          echo "Conteúdo .env:"
+          cat .env
 
       - name: Build
         run: npm run build
