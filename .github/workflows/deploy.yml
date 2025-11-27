@@ -2,7 +2,7 @@ name: Deploy SPA
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
